@@ -1,4 +1,5 @@
 import { LineChart } from '@Components';
+import { baseTheme } from '@Themes';
 import {
   Container,
   LineCard,
@@ -9,6 +10,7 @@ import {
   Option,
   Div,
 } from './materialCategoriesChart.styles';
+import { useState } from 'react';
 
 export interface TimeRangeOption {
   name: string;
@@ -32,7 +34,10 @@ const MaterialCategoriesChart = ({
   timeRanges: TimeRangeOption[];
   onTimeRangeChange: (value: number) => void;
 }) => {
+  const [selectedRange, setSelectedRange] = useState<number | null>(null);
+
   const onTimeRangeClicked = (option: TimeRangeOption) => {
+    setSelectedRange(option.value);
     onTimeRangeChange(option.value);
   };
 
@@ -46,7 +51,11 @@ const MaterialCategoriesChart = ({
         </LineContainer>
         <TimeRangeContainer>
           {timeRanges.map((timeRange) => {
-            const option = <Option onClick={() => onTimeRangeClicked(timeRange)}>{timeRange.name}</Option>;
+            const option = (
+              <Option onClick={() => onTimeRangeClicked(timeRange)} selected={selectedRange === timeRange.value}>
+                {timeRange.name}
+              </Option>
+            );
             return <Div key={timeRange.value}>{option}</Div>;
           })}
         </TimeRangeContainer>

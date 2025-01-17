@@ -46,7 +46,7 @@ export const TimeRangeContainer = styled.div`
   border: none;
 `;
 
-export const Option = styled.div`
+export const Option = styled.div<{ selected?: boolean }>`
   width: 100px;
   height: 25px;
   text-align: center;
@@ -56,6 +56,8 @@ export const Option = styled.div`
   justify-content: space-around;
   align-items: center;
   border-bottom: 2px solid ${(props) => props.theme.colors.transparentBlack};
+  color: ${({ selected, theme }) => selected ? theme.colors.bopsPurple : theme.colors.fontGrey};
+  border-color: ${({ selected, theme }) => selected ? theme.colors.bopsPurple : 'transparent'};
 
   &:hover {
     font-weight: 800;

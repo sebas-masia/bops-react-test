@@ -19,6 +19,8 @@ const DropdownIndicator = (props) => {
 };
 
 const SearchBar = ({ defaultValue, onSearchResult }) => {
+  const { data: materials } = useGetMaterialsQuery(undefined);
+
   const onChange = (selected) => {
     const value = selected ? selected.value : null;
     onSearchResult(value);
@@ -27,7 +29,12 @@ const SearchBar = ({ defaultValue, onSearchResult }) => {
   const options = [
     {
       label: 'Products',
-      options: [],
+      options: materials
+        ? Object.entries(materials).map(([id, material]: [string, any]) => ({
+            value: id,
+            label: material.name || id,
+          }))
+        : [],
     },
   ];
 
